@@ -1,0 +1,29 @@
+name: "DevOps Test: Cron & Manual Trigger Sandbox"
+
+on:
+  # Automated Schedule: Triggers every 5 minutes for rapid testing
+  schedule:
+    - cron: "*/5 * * * *"
+  
+  # Manual Trigger: Enables the "Run workflow" button in the GitHub UI
+  workflow_dispatch:
+
+jobs:
+  timezone-and-branch-test:
+    name: "Execute Telemetry Verification"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "📦 Step 1: Checkout Repository Code"
+        uses: actions/checkout@v4
+
+      - name: "📊 Step 2: Log System Time and Branch Context"
+        run: |
+          echo "================================================================"
+          echo "🏁 TEST WORKFLOW TRIGGERED SUCCESSFULLY"
+          echo "================================================================"
+          echo "🕒 Current Server Time (UTC): $(date)"
+          echo "🌍 Target Deployment Branch:  ${{ github.ref_name }}"
+          echo "👤 Triggered By User:         ${{ github.actor }}"
+          echo "🔢 GitHub Run Number:        #${{ github.run_number }}"
+          echo "================================================================"
